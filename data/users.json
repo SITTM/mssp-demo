@@ -1,0 +1,50 @@
+[
+  {
+    "id": "user-1",
+    "name": "Jamie R.",
+    "email": "jamie@mssp.com",
+    "role": "analyst",
+    "photoUrl": "/avatars/jamie.jpg",
+    "certifications": [],
+    "assignedClients": ["client-1", "client-2"],
+    "trainingProgress": {
+      "track-1": 60,
+      "track-2": 0
+    }
+  },
+  {
+    "id": "user-2",
+    "name": "Sam K.",
+    "email": "sam@mssp.com",
+    "role": "analyst",
+    "photoUrl": "/avatars/sam.jpg",
+    "certifications": ["cert-foundation", "cert-itpb"],
+    "assignedClients": ["client-3"],
+    "trainingProgress": {
+      "track-1": 100,
+      "track-2": 75
+    }
+  },
+  {
+    "id": "user-3",
+    "name": "Alex T.",
+    "email": "alex@mssp.com",
+    "role": "analyst",
+    "photoUrl": "/avatars/alex.jpg",
+    "certifications": ["cert-foundation"],
+    "assignedClients": ["client-4"],
+    "trainingProgress": {
+      "track-1": 100,
+      "track-2": 40
+    }
+  },
+  {
+    "id": "client-user-1",
+    "name": "Robert Kim",
+    "email": "robert.kim@healthcareco.com",
+    "role": "client",
+    "company": "HealthCare Co.",
+    "title": "CISO",
+    "photoUrl": "/avatars/robert.jpg"
+  }
+]

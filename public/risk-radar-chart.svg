@@ -1,0 +1,97 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="white"/>
+
+  <!-- UEBA Badge -->
+  <rect x="50" y="40" width="150" height="50" rx="25" fill="#DC2626"/>
+  <text x="125" y="72" font-size="20" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial, sans-serif">⚠ UEBA</text>
+
+  <!-- DLP Badge -->
+  <rect x="50" y="120" width="150" height="50" rx="25" fill="#EA580C"/>
+  <text x="125" y="152" font-size="20" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial, sans-serif">🛡 DLP</text>
+
+  <!-- Title -->
+  <text x="500" y="40" font-size="18" fill="#9CA3AF" text-anchor="middle" font-family="Arial, sans-serif" font-weight="600">Access Patterns</text>
+
+  <!-- Info Icon -->
+  <circle cx="750" cy="60" r="15" fill="none" stroke="#D1D5DB" stroke-width="2"/>
+  <text x="750" y="67" font-size="20" fill="#9CA3AF" text-anchor="middle" font-family="Arial, sans-serif">i</text>
+
+  <!-- Main Radar Chart -->
+  <g transform="translate(450, 320)">
+    <!-- Concentric circles (grid) -->
+    <circle cx="0" cy="0" r="50" fill="none" stroke="#E5E7EB" stroke-width="1"/>
+    <circle cx="0" cy="0" r="100" fill="none" stroke="#E5E7EB" stroke-width="1"/>
+    <circle cx="0" cy="0" r="150" fill="none" stroke="#E5E7EB" stroke-width="1"/>
+    <circle cx="0" cy="0" r="200" fill="none" stroke="#E5E7EB" stroke-width="1"/>
+
+    <!-- Axis lines (8 axes for 8 dimensions) -->
+    <line x1="0" y1="-200" x2="0" y2="200" stroke="#E5E7EB" stroke-width="1"/>
+    <line x1="-200" y1="0" x2="200" y2="0" stroke="#E5E7EB" stroke-width="1"/>
+    <line x1="-141" y1="-141" x2="141" y2="141" stroke="#E5E7EB" stroke-width="1"/>
+    <line x1="-141" y1="141" x2="141" y2="-141" stroke="#E5E7EB" stroke-width="1"/>
+
+    <!-- Normal Baseline (Blue polygon - smaller) -->
+    <polygon
+      points="0,-85 60,60 35,100 -35,100 -60,60 -90,-30 -50,-70 30,-80"
+      fill="#93C5FD"
+      fill-opacity="0.3"
+      stroke="#60A5FA"
+      stroke-width="2"
+    />
+
+    <!-- Current Risk (Red polygon - larger, irregular) -->
+    <polygon
+      points="0,-170 110,40 80,150 -80,140 -100,60 -140,-40 -70,-100 60,-130"
+      fill="#FCA5A5"
+      fill-opacity="0.4"
+      stroke="#EF4444"
+      stroke-width="3"
+    />
+
+    <!-- Data points on Current Risk -->
+    <circle cx="0" cy="-170" r="5" fill="#EF4444"/>
+    <circle cx="110" cy="40" r="5" fill="#EF4444"/>
+    <circle cx="80" cy="150" r="5" fill="#EF4444"/>
+    <circle cx="-80" cy="140" r="5" fill="#EF4444"/>
+    <circle cx="-100" cy="60" r="5" fill="#EF4444"/>
+    <circle cx="-140" cy="-40" r="5" fill="#EF4444"/>
+    <circle cx="-70" cy="-100" r="5" fill="#EF4444"/>
+    <circle cx="60" cy="-130" r="5" fill="#EF4444"/>
+  </g>
+
+  <!-- Labels around the radar (8 dimensions) -->
+  <!-- Top -->
+  <text x="450" y="95" font-size="14" fill="#9CA3AF" text-anchor="middle" font-family="Arial, sans-serif" font-weight="500">Access Patterns</text>
+
+  <!-- Top Right -->
+  <text x="610" y="200" font-size="14" fill="#9CA3AF" text-anchor="start" font-family="Arial, sans-serif" font-weight="500">Job Security</text>
+
+  <!-- Right -->
+  <text x="640" y="270" font-size="14" fill="#9CA3AF" text-anchor="start" font-family="Arial, sans-serif" font-weight="500">Communication</text>
+
+  <!-- Bottom Right -->
+  <text x="650" y="380" font-size="14" fill="#9CA3AF" text-anchor="start" font-family="Arial, sans-serif" font-weight="500">Work Hours</text>
+
+  <!-- Bottom -->
+  <text x="520" y="500" font-size="14" fill="#9CA3AF" text-anchor="middle" font-family="Arial, sans-serif" font-weight="500">System Usage</text>
+
+  <!-- Bottom Left -->
+  <text x="300" y="500" font-size="14" fill="#9CA3AF" text-anchor="middle" font-family="Arial, sans-serif" font-weight="500">Data &amp; Systems</text>
+  <text x="300" y="520" font-size="14" fill="#9CA3AF" text-anchor="middle" font-family="Arial, sans-serif" font-weight="500">Access</text>
+
+  <!-- Left -->
+  <text x="230" y="380" font-size="14" fill="#9CA3AF" text-anchor="end" font-family="Arial, sans-serif" font-weight="500">Collaboration</text>
+
+  <!-- Top Left -->
+  <text x="220" y="270" font-size="14" fill="#9CA3AF" text-anchor="end" font-family="Arial, sans-serif" font-weight="500">Financial Stress</text>
+
+  <text x="220" y="200" font-size="14" fill="#9CA3AF" text-anchor="end" font-family="Arial, sans-serif" font-weight="500">Performance Issues</text>
+
+  <!-- Legend -->
+  <rect x="50" y="540" width="35" height="20" fill="#FCA5A5" fill-opacity="0.4" stroke="#EF4444" stroke-width="2"/>
+  <text x="95" y="555" font-size="16" fill="#374151" font-family="Arial, sans-serif">Current Risk</text>
+
+  <rect x="250" y="540" width="35" height="20" fill="#93C5FD" fill-opacity="0.3" stroke="#60A5FA" stroke-width="2"/>
+  <text x="295" y="555" font-size="16" fill="#374151" font-family="Arial, sans-serif">Normal Baseline</text>
+</svg>

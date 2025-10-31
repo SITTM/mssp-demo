@@ -1,0 +1,325 @@
+[
+  {
+    "id": "track-1",
+    "title": "Track 1: Insider Threat Fundamentals",
+    "description": "Foundation course for MSSP analysts to understand insider threat fundamentals",
+    "status": "in_progress",
+    "progress": 60,
+    "prerequisite": null,
+    "estimatedHours": 10.5,
+    "modules": [
+      {
+        "id": "module-1",
+        "number": 1,
+        "title": "What is Insider Threat?",
+        "duration": 90,
+        "status": "completed",
+        "score": 92,
+        "lessons": [
+          {
+            "id": "lesson-1-1",
+            "number": 1,
+            "title": "Introduction to Insider Threats",
+            "duration": 20,
+            "videoUrl": "/videos/module-1-lesson-1.mp4",
+            "completed": true
+          },
+          {
+            "id": "lesson-1-2",
+            "number": 2,
+            "title": "Types of Insider Threats",
+            "duration": 25,
+            "videoUrl": "/videos/module-1-lesson-2.mp4",
+            "completed": true
+          },
+          {
+            "id": "lesson-1-3",
+            "number": 3,
+            "title": "Real-World Case Studies",
+            "duration": 30,
+            "videoUrl": "/videos/module-1-lesson-3.mp4",
+            "completed": true
+          },
+          {
+            "id": "lesson-1-4",
+            "number": 4,
+            "title": "Impact on Organizations",
+            "duration": 15,
+            "videoUrl": "/videos/module-1-lesson-4.mp4",
+            "completed": true
+          }
+        ],
+        "quiz": {
+          "id": "quiz-1",
+          "title": "Quiz 1: What is Insider Threat?",
+          "totalQuestions": 10,
+          "passingScore": 80,
+          "completed": true,
+          "score": 92,
+          "attempts": 1
+        }
+      },
+      {
+        "id": "module-2",
+        "number": 2,
+        "title": "Insider Threat Psychology",
+        "duration": 90,
+        "status": "completed",
+        "score": 88,
+        "lessons": [
+          {
+            "id": "lesson-2-1",
+            "number": 1,
+            "title": "Motivations Behind Insider Threats",
+            "duration": 25,
+            "videoUrl": "/videos/module-2-lesson-1.mp4",
+            "completed": true
+          },
+          {
+            "id": "lesson-2-2",
+            "number": 2,
+            "title": "Behavioral Indicators",
+            "duration": 30,
+            "videoUrl": "/videos/module-2-lesson-2.mp4",
+            "completed": true
+          },
+          {
+            "id": "lesson-2-3",
+            "number": 3,
+            "title": "Risk Factors and Red Flags",
+            "duration": 35,
+            "videoUrl": "/videos/module-2-lesson-3.mp4",
+            "completed": true
+          }
+        ],
+        "quiz": {
+          "id": "quiz-2",
+          "title": "Quiz 2: Insider Threat Psychology",
+          "totalQuestions": 10,
+          "passingScore": 80,
+          "completed": true,
+          "score": 88,
+          "attempts": 1
+        }
+      },
+      {
+        "id": "module-3",
+        "number": 3,
+        "title": "Insider Threat Frameworks",
+        "duration": 120,
+        "status": "completed",
+        "score": 85,
+        "lessons": [
+          {
+            "id": "lesson-3-1",
+            "number": 1,
+            "title": "NIST Insider Threat Framework",
+            "duration": 40,
+            "videoUrl": "/videos/module-3-lesson-1.mp4",
+            "completed": true
+          },
+          {
+            "id": "lesson-3-2",
+            "number": 2,
+            "title": "CERT Insider Threat Model",
+            "duration": 40,
+            "videoUrl": "/videos/module-3-lesson-2.mp4",
+            "completed": true
+          },
+          {
+            "id": "lesson-3-3",
+            "number": 3,
+            "title": "Maturity Models",
+            "duration": 40,
+            "videoUrl": "/videos/module-3-lesson-3.mp4",
+            "completed": true
+          }
+        ],
+        "quiz": {
+          "id": "quiz-3",
+          "title": "Quiz 3: Insider Threat Frameworks",
+          "totalQuestions": 12,
+          "passingScore": 80,
+          "completed": true,
+          "score": 85,
+          "attempts": 1
+        }
+      },
+      {
+        "id": "module-4",
+        "number": 4,
+        "title": "Legal & Privacy Considerations",
+        "duration": 120,
+        "status": "in_progress",
+        "score": null,
+        "lessons": [
+          {
+            "id": "lesson-4-1",
+            "number": 1,
+            "title": "GDPR and Employee Monitoring",
+            "duration": 35,
+            "videoUrl": "/videos/module-4-lesson-1.mp4",
+            "completed": true
+          },
+          {
+            "id": "lesson-4-2",
+            "number": 2,
+            "title": "HIPAA Security Rule",
+            "duration": 30,
+            "videoUrl": "/videos/module-4-lesson-2.mp4",
+            "completed": false
+          },
+          {
+            "id": "lesson-4-3",
+            "number": 3,
+            "title": "State Privacy Laws",
+            "duration": 25,
+            "videoUrl": "/videos/module-4-lesson-3.mp4",
+            "completed": false
+          },
+          {
+            "id": "lesson-4-4",
+            "number": 4,
+            "title": "Employee Consent and Disclosure",
+            "duration": 20,
+            "videoUrl": "/videos/module-4-lesson-4.mp4",
+            "completed": false
+          },
+          {
+            "id": "lesson-4-5",
+            "number": 5,
+            "title": "Balancing Security and Privacy",
+            "duration": 10,
+            "videoUrl": "/videos/module-4-lesson-5.mp4",
+            "completed": false
+          }
+        ],
+        "quiz": {
+          "id": "quiz-4",
+          "title": "Quiz 4: Legal & Privacy Considerations",
+          "totalQuestions": 12,
+          "passingScore": 80,
+          "completed": false,
+          "score": null,
+          "attempts": 0,
+          "locked": true
+        },
+        "exercise": {
+          "id": "exercise-4",
+          "title": "Exercise 4.4: Draft Monitoring Disclosure Statement",
+          "description": "Draft a monitoring disclosure statement for a healthcare client with 500 employees (CA + EU workers)",
+          "wordLimit": [200, 300],
+          "gradingCriteria": [
+            "Discloses WHAT is monitored",
+            "Explains WHY monitoring is necessary",
+            "Describes HOW data is used",
+            "Identifies WHO has access to data",
+            "Specifies HOW LONG data is retained",
+            "References applicable laws (GDPR, CCPA)",
+            "Tone is clear and respectful",
+            "Length is appropriate (200-300 words)"
+          ],
+          "completed": false,
+          "score": null
+        }
+      },
+      {
+        "id": "module-5",
+        "number": 5,
+        "title": "Industry-Specific Threats",
+        "duration": 180,
+        "status": "locked",
+        "score": null,
+        "lessons": [
+          {
+            "id": "lesson-5-1",
+            "number": 1,
+            "title": "Healthcare Insider Threats",
+            "duration": 40,
+            "videoUrl": "/videos/module-5-lesson-1.mp4",
+            "completed": false
+          },
+          {
+            "id": "lesson-5-2",
+            "number": 2,
+            "title": "Financial Services Threats",
+            "duration": 40,
+            "videoUrl": "/videos/module-5-lesson-2.mp4",
+            "completed": false
+          },
+          {
+            "id": "lesson-5-3",
+            "number": 3,
+            "title": "Technology Sector Threats",
+            "duration": 40,
+            "videoUrl": "/videos/module-5-lesson-3.mp4",
+            "completed": false
+          },
+          {
+            "id": "lesson-5-4",
+            "number": 4,
+            "title": "Manufacturing & Logistics",
+            "duration": 35,
+            "videoUrl": "/videos/module-5-lesson-4.mp4",
+            "completed": false
+          },
+          {
+            "id": "lesson-5-5",
+            "number": 5,
+            "title": "Retail & E-commerce",
+            "duration": 25,
+            "videoUrl": "/videos/module-5-lesson-5.mp4",
+            "completed": false
+          }
+        ],
+        "quiz": {
+          "id": "quiz-5",
+          "title": "Quiz 5: Industry-Specific Threats",
+          "totalQuestions": 15,
+          "passingScore": 80,
+          "completed": false,
+          "score": null,
+          "attempts": 0,
+          "locked": true
+        }
+      }
+    ],
+    "finalExam": {
+      "id": "final-exam-track-1",
+      "title": "Track 1 Final Exam: Insider Threat Fundamentals",
+      "totalQuestions": 50,
+      "passingScore": 80,
+      "duration": 120,
+      "completed": false,
+      "score": null,
+      "attempts": 0,
+      "locked": true
+    },
+    "certificate": {
+      "id": "cert-foundation",
+      "name": "Foundation Certificate",
+      "description": "Certified in Insider Threat Fundamentals",
+      "validityYears": 2,
+      "earned": false,
+      "earnedDate": null
+    }
+  },
+  {
+    "id": "track-2",
+    "title": "Track 2: Program Building Essentials",
+    "description": "Learn to build and implement insider threat programs for clients",
+    "status": "locked",
+    "progress": 0,
+    "prerequisite": "track-1",
+    "estimatedHours": 15,
+    "modules": [],
+    "certificate": {
+      "id": "cert-itpb",
+      "name": "ITPB (Insider Threat Program Builder)",
+      "description": "Certified to build insider threat programs",
+      "validityYears": 2,
+      "earned": false,
+      "earnedDate": null
+    }
+  }
+]

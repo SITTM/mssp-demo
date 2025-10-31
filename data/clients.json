@@ -1,0 +1,166 @@
+[
+  {
+    "id": "client-1",
+    "name": "HealthCare Co.",
+    "industry": "Healthcare",
+    "size": 500,
+    "primaryContact": {
+      "name": "Robert Kim",
+      "email": "robert.kim@healthcareco.com",
+      "title": "CISO"
+    },
+    "assignedAnalyst": "user-1",
+    "startDate": "2025-07-01",
+    "status": "scope_definition",
+    "programStatus": "Program Building In Progress",
+    "maturity": {
+      "starting": 0,
+      "current": 1.5,
+      "target": 2.0,
+      "targetDate": "2025-12-01"
+    },
+    "progress": {
+      "phase": "Q1 - Foundation",
+      "percentage": 40,
+      "completedMilestones": [
+        "Maturity Assessment"
+      ],
+      "inProgressMilestones": [
+        "Scope Definition"
+      ],
+      "upcomingMilestones": [
+        "Tooling Recommendations",
+        "Policy Development"
+      ]
+    },
+    "nextMilestone": {
+      "title": "Scope approval",
+      "dueDate": "2025-10-23",
+      "daysRemaining": 7
+    },
+    "blockers": [],
+    "recentActivity": [
+      {
+        "date": "2025-10-10",
+        "description": "Scope definition document sent to client for review"
+      },
+      {
+        "date": "2025-10-08",
+        "description": "Risk scenario brainstorming workshop completed"
+      },
+      {
+        "date": "2025-10-05",
+        "description": "Maturity assessment report presented to client"
+      }
+    ]
+  },
+  {
+    "id": "client-2",
+    "name": "FinTech Inc.",
+    "industry": "FinTech",
+    "size": 800,
+    "primaryContact": {
+      "name": "Sarah Chen",
+      "email": "sarah.chen@fintechinc.com",
+      "title": "Head of Security"
+    },
+    "assignedAnalyst": "user-2",
+    "startDate": "2025-05-01",
+    "status": "implementation",
+    "programStatus": "Month 2 of Implementation",
+    "maturity": {
+      "starting": 1.0,
+      "current": 1.7,
+      "target": 2.5,
+      "targetDate": "2026-02-01"
+    },
+    "progress": {
+      "phase": "Q2 - Operationalization",
+      "percentage": 15,
+      "completedMilestones": [
+        "Maturity Assessment",
+        "Scope Definition",
+        "Roadmap Approved"
+      ],
+      "inProgressMilestones": [
+        "DLP Deployment"
+      ],
+      "upcomingMilestones": [
+        "SIEM Integration",
+        "Employee Training Rollout"
+      ]
+    },
+    "nextMilestone": {
+      "title": "DLP deployment",
+      "dueDate": "2025-10-30",
+      "daysRemaining": 14
+    },
+    "blockers": [],
+    "recentActivity": [
+      {
+        "date": "2025-10-12",
+        "description": "DLP vendor selected and contract signed"
+      },
+      {
+        "date": "2025-10-01",
+        "description": "Roadmap approved by executive team"
+      }
+    ]
+  },
+  {
+    "id": "client-3",
+    "name": "Logistics Co.",
+    "industry": "Logistics",
+    "size": 1200,
+    "primaryContact": {
+      "name": "Michael Torres",
+      "email": "michael.torres@logisticsco.com",
+      "title": "IT Director"
+    },
+    "assignedAnalyst": "user-3",
+    "startDate": "2025-08-01",
+    "status": "blocked",
+    "programStatus": "Roadmap Created - Awaiting Budget Approval",
+    "maturity": {
+      "starting": 0.5,
+      "current": 0.5,
+      "target": 1.5,
+      "targetDate": "2026-08-01"
+    },
+    "progress": {
+      "phase": "Q1 - Foundation",
+      "percentage": 25,
+      "completedMilestones": [
+        "Maturity Assessment",
+        "Roadmap Created"
+      ],
+      "inProgressMilestones": [],
+      "upcomingMilestones": [
+        "Budget Approval",
+        "Policy Development"
+      ]
+    },
+    "nextMilestone": {
+      "title": "CFO budget approval",
+      "dueDate": "2025-11-15",
+      "daysRemaining": 30
+    },
+    "blockers": [
+      {
+        "type": "budget",
+        "description": "CFO approval pending for $250K budget",
+        "since": "2025-09-15"
+      }
+    ],
+    "recentActivity": [
+      {
+        "date": "2025-09-20",
+        "description": "Roadmap presented to CFO, pending approval"
+      },
+      {
+        "date": "2025-09-10",
+        "description": "Maturity assessment completed"
+      }
+    ]
+  }
+]

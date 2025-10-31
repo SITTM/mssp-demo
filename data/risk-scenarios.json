@@ -1,0 +1,66 @@
+[
+  {
+    "id": "scenario-1",
+    "title": "Unauthorized Patient Record Access",
+    "description": "Employee accesses patient records without business need (e.g., celebrity snooping)",
+    "industry": "Healthcare",
+    "riskLevel": "High",
+    "priority": null
+  },
+  {
+    "id": "scenario-2",
+    "title": "Patient Data Exfiltration",
+    "description": "Malicious insider downloads and sells patient data to third parties",
+    "industry": "Healthcare",
+    "riskLevel": "Critical",
+    "priority": null
+  },
+  {
+    "id": "scenario-3",
+    "title": "Prescription Fraud",
+    "description": "Healthcare worker manipulates prescription records for personal gain or illegal activity",
+    "industry": "Healthcare",
+    "riskLevel": "High",
+    "priority": null
+  },
+  {
+    "id": "scenario-4",
+    "title": "Insider-Enabled Ransomware",
+    "description": "Insider disables security controls to enable ransomware attack",
+    "industry": "All",
+    "riskLevel": "Critical",
+    "priority": null
+  },
+  {
+    "id": "scenario-5",
+    "title": "Unauthorized System Access",
+    "description": "Employee accesses systems beyond their authorized scope",
+    "industry": "All",
+    "riskLevel": "High",
+    "priority": null
+  },
+  {
+    "id": "scenario-6",
+    "title": "PHI Transmission via Unsecured Email",
+    "description": "Employee sends protected health information via personal email account",
+    "industry": "Healthcare",
+    "riskLevel": "Medium",
+    "priority": null
+  },
+  {
+    "id": "scenario-7",
+    "title": "Intellectual Property Theft",
+    "description": "Employee steals proprietary data before leaving for competitor",
+    "industry": "All",
+    "riskLevel": "High",
+    "priority": null
+  },
+  {
+    "id": "scenario-8",
+    "title": "Financial Fraud",
+    "description": "Insider manipulates financial records or initiates fraudulent transactions",
+    "industry": "FinTech",
+    "riskLevel": "Critical",
+    "priority": null
+  }
+]
