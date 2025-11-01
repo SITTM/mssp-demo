@@ -187,6 +187,15 @@ export function WorkroomCreationStep2({
 
   const toggleSpecialist = (userId: string) => {
     const isAdding = !selectedParticipants.includes(userId);
+    const isAlreadyInTeam = selectedTeamMembers.some(m => m.userId === userId);
+
+    console.log('🔄 toggleSpecialist called:', {
+      userId,
+      isAdding,
+      isAlreadyInTeam,
+      currentParticipants: selectedParticipants.length,
+      currentTeamMembers: selectedTeamMembers.length
+    });
 
     setSelectedParticipants((prev) =>
       prev.includes(userId)
@@ -194,31 +203,49 @@ export function WorkroomCreationStep2({
         : [...prev, userId]
     );
 
-    // If adding an internal (client) team member, trigger invitation animation
-    if (isAdding) {
+    // If adding a team member (client or external), add to core team status list
+    // IMPORTANT: Also add if already in selectedParticipants but not in team members
+    // (This happens when modal selection occurs for pre-selected participants)
+    if (isAdding || (!isAdding && !isAlreadyInTeam)) {
       // Look up specialist from full profiles list, not just searchResults
       // This ensures Legal & HR experts selected via modal are found even if not in filtered results
       const specialist = getSpecialistById(userId);
-      if (specialist && specialist.organization === 'client') {
-        // Add to selected team members
-        setSelectedTeamMembers(prev => [...prev, specialist]);
+      console.log('👤 Looking up specialist:', userId, specialist ? `Found: ${specialist.name}` : 'NOT FOUND');
 
-        // Set initial status as "inviting"
+      if (specialist && !isAlreadyInTeam) {
+        // Add to selected team members (both client and external experts)
+        setSelectedTeamMembers(prev => {
+          const updated = [...prev, specialist];
+          console.log('✅ Added to team members:', specialist.name, 'Total:', updated.length);
+          return updated;
+        });
+
+        // Set initial status as "inviting" for client members, "joined" for external
+        const initialStatus = specialist.organization === 'client' ? 'inviting' : 'joined';
+        console.log('📊 Setting invitation status:', userId, initialStatus);
         setInvitationStatus(prev => ({
           ...prev,
-          [userId]: 'inviting'
+          [userId]: initialStatus
         }));
 
-        // After 10 seconds, update to "joined"
-        setTimeout(() => {
-          setInvitationStatus(prev => ({
-            ...prev,
-            [userId]: 'joined'
-          }));
-        }, 10000);
+        // For client members, update to "joined" after 10 seconds
+        if (specialist.organization === 'client') {
+          setTimeout(() => {
+            console.log('⏰ Updating status to joined:', userId);
+            setInvitationStatus(prev => ({
+              ...prev,
+              [userId]: 'joined'
+            }));
+          }, 10000);
+        }
+      } else if (isAlreadyInTeam) {
+        console.log('ℹ️ Specialist already in team members, skipping add:', userId);
+      } else {
+        console.error('❌ Specialist not found in database:', userId);
       }
     } else {
       // If removing, also remove from team members and invitation status
+      console.log('➖ Removing from team:', userId);
       setSelectedTeamMembers(prev => prev.filter(m => m.userId !== userId));
       setInvitationStatus(prev => {
         const newStatus = { ...prev };
@@ -666,14 +693,7 @@ export function WorkroomCreationStep2({
             ← Back
           </Button>
 
-          <Alert className="flex-1 mx-4 py-2">
-            <AlertDescription className="text-sm">
-              <strong>Selected participants: {selectedParticipants.length}</strong> -
-              All will receive invitations when the room is created
-            </AlertDescription>
-          </Alert>
-
-          <Button variant="default" onClick={handleContinue} className="px-6">
+          <Button variant="default" onClick={handleContinue} className="px-6 ml-auto">
             Continue to Evidence Collection →
           </Button>
         </div>

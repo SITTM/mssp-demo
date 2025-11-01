@@ -49,9 +49,37 @@ export function SpecialistSplitView({
   const independentCount = searchResults.filter(s => s.isIndependent).length;
 
   const handleExpertSelection = (legalExpertId: string, hrExpertId: string) => {
-    // Add both experts to selected participants
-    onToggleSpecialist(legalExpertId);
-    onToggleSpecialist(hrExpertId);
+    // Add both experts to selected participants (only if not already selected)
+    if (!selectedParticipants.includes(legalExpertId)) {
+      onToggleSpecialist(legalExpertId);
+    }
+    if (!selectedParticipants.includes(hrExpertId)) {
+      onToggleSpecialist(hrExpertId);
+    }
+    // Close the modal
+    setShowExpertModal(false);
+  };
+
+  const handleCompanyExpertSelect = (expertId: string, isAdding: boolean) => {
+    // Immediately add/remove internal expert when checkbox is clicked
+    const isCurrentlySelected = selectedParticipants.includes(expertId);
+
+    console.log('🎯 handleCompanyExpertSelect in SpecialistSplitView:', {
+      expertId,
+      isAdding,
+      isCurrentlySelected,
+      selectedParticipants: selectedParticipants.length
+    });
+
+    if (isAdding) {
+      console.log('➕ Ensuring expert is added to team:', expertId);
+      // Always call toggleSpecialist, it will handle checking if already in team members
+      onToggleSpecialist(expertId);
+    } else if (!isAdding) {
+      // Removing: call toggle to remove
+      console.log('➖ Removing expert from team:', expertId);
+      onToggleSpecialist(expertId);
+    }
   };
 
   return (
@@ -90,6 +118,7 @@ export function SpecialistSplitView({
         open={showExpertModal}
         onOpenChange={setShowExpertModal}
         onConfirm={handleExpertSelection}
+        onCompanyExpertSelect={handleCompanyExpertSelect}
       />
 
       {/* Search Results - Only show for MSSP view when actively searching */}
@@ -293,35 +322,41 @@ export function SpecialistSplitView({
                   )}
                 </div>
 
-                {/* Dynamically selected team members (Legal & HR from client org) - Appended to core team */}
-                {selectedTeamMembers && selectedTeamMembers.length > 0 && selectedTeamMembers.map((member) => (
-                  <div key={member.userId} className={`flex items-center gap-3 p-3 rounded-lg bg-white border ${
-                    invitationStatus[member.userId] === 'joined' ? 'border-green-200' : 'border-purple-200'
-                  }`}>
-                    <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
-                      invitationStatus[member.userId] === 'joined' ? 'bg-green-100' : 'bg-purple-100'
+                {/* Dynamically selected team members (Legal & HR - both client and external) - Appended to core team */}
+                {selectedTeamMembers && selectedTeamMembers.length > 0 && selectedTeamMembers.map((member) => {
+                  const isExternal = member.organization === 'independent';
+                  return (
+                    <div key={member.userId} className={`flex items-center gap-3 p-3 rounded-lg bg-white border ${
+                      invitationStatus[member.userId] === 'joined' ? 'border-green-200' : 'border-purple-200'
                     }`}>
-                      <Users className={`h-4 w-4 ${
-                        invitationStatus[member.userId] === 'joined' ? 'text-green-600' : 'text-purple-600'
-                      }`} />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-slate-900">{member.name} ({member.displayRole})</p>
-                      <p className="text-xs text-slate-600">{member.email}</p>
-                    </div>
-                    {invitationStatus[member.userId] === 'joined' ? (
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                        <span className="text-xs text-green-600 font-medium">✓ Joined</span>
+                      <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
+                        invitationStatus[member.userId] === 'joined' ? 'bg-green-100' : 'bg-purple-100'
+                      }`}>
+                        <Users className={`h-4 w-4 ${
+                          invitationStatus[member.userId] === 'joined' ? 'text-green-600' : 'text-purple-600'
+                        }`} />
                       </div>
-                    ) : (
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></div>
-                        <span className="text-xs text-purple-600 font-medium">Inviting...</span>
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-slate-900">
+                          {member.name} ({member.displayRole})
+                          {isExternal && <span className="ml-2 text-xs text-purple-600 font-semibold">EXTERNAL</span>}
+                        </p>
+                        <p className="text-xs text-slate-600">{member.email}</p>
                       </div>
-                    )}
-                  </div>
-                ))}
+                      {invitationStatus[member.userId] === 'joined' ? (
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                          <span className="text-xs text-green-600 font-medium">✓ Joined</span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></div>
+                          <span className="text-xs text-purple-600 font-medium">Inviting...</span>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </AlertDescription>
           </Alert>
