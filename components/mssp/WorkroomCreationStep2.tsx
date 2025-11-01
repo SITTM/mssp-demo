@@ -6,15 +6,19 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Progress } from "@/components/ui/progress";
 import { UrgentNotable } from "@/lib/mockData/msspPortfolioMockData";
 import { RoomParticipant, RoomRole } from "@/lib/types/incidentRoom";
 import { searchSpecialists, getSpecialistsByIncidentType, getSpecialistById, SpecialistProfile } from "@/lib/data/specialist-profiles";
-import { Users, Shield, Scale, UserCheck, Building2, Clock } from "lucide-react";
+import { createWorkroomFromNotable } from "@/lib/services/workroomCreation";
+import { Users, Shield, Scale, UserCheck, Building2, Clock, CheckCircle2, Loader2, CheckCheck } from "lucide-react";
 import { SpecialistSplitView } from "./SpecialistSplitView";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface WorkroomCreationStep2Props {
   notable: UrgentNotable;
   onContinue: (participants: RoomParticipant[]) => void;
+  onFinalize: (roomId: string) => void;
   onBack: () => void;
 }
 
@@ -42,6 +46,7 @@ interface ParticipantOption {
 export function WorkroomCreationStep2({
   notable,
   onContinue,
+  onFinalize,
   onBack,
 }: WorkroomCreationStep2Props) {
   const [searchTerm, setSearchTerm] = useState(notable.notableType);
@@ -54,6 +59,10 @@ export function WorkroomCreationStep2({
     ciso: 'pending',
   });
   const [selectedTeamMembers, setSelectedTeamMembers] = useState<SpecialistProfile[]>([]);
+  const [isCreating, setIsCreating] = useState(false);
+  const [creationProgress, setCreationProgress] = useState(0);
+  const [isComplete, setIsComplete] = useState(false);
+  const [createdRoomId, setCreatedRoomId] = useState<string | null>(null);
 
   // Calculate incident dates once to avoid hydration mismatch
   const [incidentDates] = useState(() => ({
@@ -344,12 +353,85 @@ export function WorkroomCreationStep2({
     onContinue([...coreParticipants, ...specialistParticipants]);
   };
 
+  const handleFinalize = async () => {
+    setIsCreating(true);
+    setCreationProgress(0);
+
+    // Get all participants
+    const coreParticipants: RoomParticipant[] = participantOptions
+      .filter((p) => selectedParticipants.includes(p.userId))
+      .map((p) => ({
+        userId: p.userId,
+        name: p.name,
+        email: p.email,
+        role: p.role,
+        organization: p.organization,
+        joinedAt: new Date(),
+        lastSeen: new Date(),
+        permissions: p.permissions,
+      }));
+
+    const specialistParticipants: RoomParticipant[] = searchResults
+      .filter((s) => selectedParticipants.includes(s.userId))
+      .map(convertSpecialistToParticipant);
+
+    const allParticipants = [...coreParticipants, ...specialistParticipants];
+
+    // Simulate progressive creation
+    const progressSteps = [
+      { progress: 20, delay: 300 },
+      { progress: 40, delay: 500 },
+      { progress: 60, delay: 400 },
+      { progress: 80, delay: 500 },
+      { progress: 100, delay: 300 },
+    ];
+
+    for (const step of progressSteps) {
+      await new Promise((resolve) => setTimeout(resolve, step.delay));
+      setCreationProgress(step.progress);
+    }
+
+    // Create the workroom
+    const incidentRoom = createWorkroomFromNotable(notable, allParticipants);
+    setCreatedRoomId(incidentRoom.id);
+
+    // Show success animation
+    setIsComplete(true);
+
+    // Auto-redirect after 1.5 seconds
+    setTimeout(() => {
+      onFinalize(incidentRoom.id);
+    }, 1500);
+  };
+
   return (
     <div className="h-full flex flex-col bg-slate-50">
+      {/* Top Status Bar */}
+      <div className="border-b bg-white p-3 md:p-4 shrink-0">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+          <div className="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-slate-600">
+            <span>
+              Client: <strong className="text-slate-900">{notable.clientName}</strong>
+            </span>
+            <span className="hidden sm:inline">•</span>
+            <span>
+              Incident: <strong className="text-slate-900">{notable.notableType}</strong>
+            </span>
+            <span className="hidden sm:inline">•</span>
+            <span>
+              Available Specialists: <strong className="text-slate-900">{searchResults.length}</strong>
+            </span>
+          </div>
+          <div className="text-xs md:text-sm text-slate-600">
+            {currentTime?.toLocaleTimeString()}
+          </div>
+        </div>
+      </div>
+
       {/* Split Screen - Two Completely Separate Floating Panels */}
-      <div className="grid grid-cols-2 gap-4 h-[calc(90vh-180px)] p-4 relative">
-        {/* Thick Black Divider Line */}
-        <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-black -translate-x-1/2 z-10"></div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 flex-1 p-4 relative overflow-hidden">
+        {/* Thick Black Divider Line - Only on large screens */}
+        <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-1 bg-black -translate-x-1/2 z-10"></div>
         {/* LEFT SIDE - MSSP VIEW */}
         <div className="relative">
           <Card className="h-full flex flex-col border-2 border-blue-500 shadow-xl shadow-blue-500/20">
@@ -457,6 +539,10 @@ export function WorkroomCreationStep2({
                     selectedParticipants={selectedParticipants}
                     onToggleSpecialist={toggleSpecialist}
                     viewMode="client"
+                    clientName={notable.clientName}
+                    showInvitationStory={true}
+                    invitationStatus={invitationStatus}
+                    selectedTeamMembers={selectedTeamMembers}
                   />
                 </div>
               </div>
@@ -667,36 +753,58 @@ export function WorkroomCreationStep2({
         </div>
       </div>
 
+      {/* Creation Progress */}
+      <AnimatePresence>
+        {isCreating && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="mx-4 mb-4 space-y-3 rounded-lg border border-blue-500/30 bg-blue-950/10 p-4"
+          >
+            <div className="flex items-center gap-2">
+              {!isComplete ? (
+                <Loader2 className="h-5 w-5 animate-spin text-blue-500" />
+              ) : (
+                <CheckCheck className="h-5 w-5 text-green-500" />
+              )}
+              <span className="font-semibold">
+                {!isComplete ? "Creating Incident Room..." : "Incident Room Created!"}
+              </span>
+            </div>
+
+            <Progress value={creationProgress} className="h-2" />
+
+            {isComplete && createdRoomId && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-sm space-y-1"
+              >
+                <p className="text-green-500 font-medium">
+                  ✓ Room ID: {createdRoomId}
+                </p>
+                <p className="text-slate-600">Redirecting to incident room...</p>
+              </motion.div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Bottom Action Bar */}
-      <div className="border-t bg-white p-4 shrink-0">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-4 text-sm text-slate-600">
-            <span>
-              Client: <strong className="text-slate-900">{notable.clientName}</strong>
-            </span>
-            <span>•</span>
-            <span>
-              Incident: <strong className="text-slate-900">{notable.notableType}</strong>
-            </span>
-            <span>•</span>
-            <span>
-              Available Specialists: <strong className="text-slate-900">{searchResults.length}</strong>
-            </span>
-          </div>
-          <div className="text-sm text-slate-600">
-            {currentTime?.toLocaleTimeString()}
-          </div>
-        </div>
+      <div className="border-t bg-white p-3 md:p-4 shrink-0">
+        {!isCreating && (
+          <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2">
+            <Button variant="outline" onClick={onBack} className="w-full sm:w-auto">
+              ← Back
+            </Button>
 
-        <div className="flex justify-between items-center">
-          <Button variant="outline" onClick={onBack}>
-            ← Back
-          </Button>
-
-          <Button variant="default" onClick={handleContinue} className="px-6 ml-auto">
-            Continue to Evidence Collection →
-          </Button>
-        </div>
+            <Button variant="default" onClick={handleFinalize} className="w-full sm:w-auto px-6 gap-2">
+              <CheckCircle2 className="h-4 w-4" />
+              Finalize & Create Incident Room
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

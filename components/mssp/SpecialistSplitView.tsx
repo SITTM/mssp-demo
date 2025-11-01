@@ -271,21 +271,26 @@ export function SpecialistSplitView({
         </Alert>
       )}
 
-      {/* Invitation Story for MSSP View - Core Team Status */}
-      {viewMode === 'mssp' && showInvitationStory && (
+      {/* Core Team Status - Shown on both MSSP and Client views */}
+      {showInvitationStory && (
         <div className="space-y-4">
-          <Alert className="border-blue-500/30 bg-blue-50">
+          <Alert className={viewMode === 'mssp' ? 'border-blue-500/30 bg-blue-50' : 'border-purple-500/30 bg-purple-50'}>
             <AlertDescription>
               <div className="space-y-3">
-                <p className="font-semibold text-blue-900">Core Team Status</p>
+                <p className={`font-semibold ${viewMode === 'mssp' ? 'text-blue-900' : 'text-purple-900'}`}>
+                  Core Team Status
+                </p>
 
-                {/* MSSP Analyst - Always shown */}
-                <div className="flex items-center gap-3 p-3 rounded-lg bg-white border border-blue-200">
+                {/* MSSP Analyst - Always shown - MSSP role shading (blue) */}
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-white border border-blue-200 shadow-sm">
                   <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100">
                     <Shield className="h-4 w-4 text-blue-600" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-slate-900">Marcus Reid (MSSP Lead Analyst)</p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm font-medium text-slate-900">Marcus Reid (MSSP Lead Analyst)</p>
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-medium">MSSP</span>
+                    </div>
                     <p className="text-xs text-slate-600">marcus.reid@mssp.com</p>
                   </div>
                   <div className="flex items-center gap-2">
@@ -294,19 +299,24 @@ export function SpecialistSplitView({
                   </div>
                 </div>
 
-                {/* Client CISO - Always shown */}
-                <div className={`flex items-center gap-3 p-3 rounded-lg bg-white border ${
-                  invitationStatus['ciso'] === 'joined' ? 'border-green-200' : 'border-purple-200'
+                {/* Client CISO - Always shown - Client role shading (teal) */}
+                <div className={`flex items-center gap-3 p-3 rounded-lg bg-white border shadow-sm ${
+                  invitationStatus['ciso'] === 'joined' ? 'border-green-200' : 'border-teal-200'
                 }`}>
                   <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
-                    invitationStatus['ciso'] === 'joined' ? 'bg-green-100' : 'bg-purple-100'
+                    invitationStatus['ciso'] === 'joined' ? 'bg-green-100' : 'bg-teal-100'
                   }`}>
                     <Users className={`h-4 w-4 ${
-                      invitationStatus['ciso'] === 'joined' ? 'text-green-600' : 'text-purple-600'
+                      invitationStatus['ciso'] === 'joined' ? 'text-green-600' : 'text-teal-600'
                     }`} />
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-slate-900">Sarah Chen (CISO)</p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm font-medium text-slate-900">Sarah Chen (CISO)</p>
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-teal-100 text-teal-700 font-medium">
+                        {viewMode === 'client' ? clientName.split(' ')[0] : 'CLIENT'}
+                      </span>
+                    </div>
                     <p className="text-xs text-slate-600">sarah.chen@{clientName.toLowerCase().replace(/\s+/g, "")}.com</p>
                   </div>
                   {invitationStatus['ciso'] === 'joined' ? (
@@ -316,31 +326,45 @@ export function SpecialistSplitView({
                     </div>
                   ) : (
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></div>
-                      <span className="text-xs text-purple-600 font-medium">Sending invitation...</span>
+                      <div className="w-2 h-2 rounded-full bg-teal-500 animate-pulse"></div>
+                      <span className="text-xs text-teal-600 font-medium">Sending invitation...</span>
                     </div>
                   )}
                 </div>
 
-                {/* Dynamically selected team members (Legal & HR - both client and external) - Appended to core team */}
+                {/* Dynamically selected team members - Different shading based on organization */}
                 {selectedTeamMembers && selectedTeamMembers.length > 0 && selectedTeamMembers.map((member) => {
                   const isExternal = member.organization === 'independent';
+                  const isClient = member.organization === 'client';
+                  const isMSSP = member.organization === 'mssp';
+
+                  // Color scheme based on organization
+                  const colors = isExternal
+                    ? { border: 'border-purple-200', bg: 'bg-purple-100', text: 'text-purple-600', badge: 'bg-purple-100 text-purple-700', label: 'EXTERNAL' }
+                    : isClient
+                    ? { border: 'border-teal-200', bg: 'bg-teal-100', text: 'text-teal-600', badge: 'bg-teal-100 text-teal-700', label: viewMode === 'client' ? clientName.split(' ')[0] : 'CLIENT' }
+                    : { border: 'border-blue-200', bg: 'bg-blue-100', text: 'text-blue-600', badge: 'bg-blue-100 text-blue-700', label: 'MSSP' };
+
                   return (
-                    <div key={member.userId} className={`flex items-center gap-3 p-3 rounded-lg bg-white border ${
-                      invitationStatus[member.userId] === 'joined' ? 'border-green-200' : 'border-purple-200'
+                    <div key={member.userId} className={`flex items-center gap-3 p-3 rounded-lg bg-white border shadow-sm ${
+                      invitationStatus[member.userId] === 'joined' ? 'border-green-200' : colors.border
                     }`}>
                       <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
-                        invitationStatus[member.userId] === 'joined' ? 'bg-green-100' : 'bg-purple-100'
+                        invitationStatus[member.userId] === 'joined' ? 'bg-green-100' : colors.bg
                       }`}>
                         <Users className={`h-4 w-4 ${
-                          invitationStatus[member.userId] === 'joined' ? 'text-green-600' : 'text-purple-600'
+                          invitationStatus[member.userId] === 'joined' ? 'text-green-600' : colors.text
                         }`} />
                       </div>
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-slate-900">
-                          {member.name} ({member.displayRole})
-                          {isExternal && <span className="ml-2 text-xs text-purple-600 font-semibold">EXTERNAL</span>}
-                        </p>
+                        <div className="flex items-center gap-2">
+                          <p className="text-sm font-medium text-slate-900">
+                            {member.name} ({member.displayRole})
+                          </p>
+                          <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${colors.badge}`}>
+                            {colors.label}
+                          </span>
+                        </div>
                         <p className="text-xs text-slate-600">{member.email}</p>
                       </div>
                       {invitationStatus[member.userId] === 'joined' ? (
@@ -350,8 +374,8 @@ export function SpecialistSplitView({
                         </div>
                       ) : (
                         <div className="flex items-center gap-2">
-                          <div className="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></div>
-                          <span className="text-xs text-purple-600 font-medium">Inviting...</span>
+                          <div className={`w-2 h-2 rounded-full ${colors.text.replace('text-', 'bg-')} animate-pulse`}></div>
+                          <span className={`text-xs ${colors.text} font-medium`}>Inviting...</span>
                         </div>
                       )}
                     </div>

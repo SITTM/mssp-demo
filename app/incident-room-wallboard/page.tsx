@@ -7,7 +7,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { searchSpecialists, getSpecialistsByIncidentType } from "@/lib/data/specialist-profiles";
 import { SpecialistSplitView } from "@/components/mssp/SpecialistSplitView";
-import { Shield, Users, Building2, Clock, AlertTriangle } from "lucide-react";
+import { EvidenceAutoCollection } from "@/components/incident-room/EvidenceAutoCollection";
+import { TeamsConferenceView } from "@/components/incident-room/TeamsConferenceView";
+import { Shield, Users, Building2, Clock, AlertTriangle, Video } from "lucide-react";
 import { loadIncidentRoom } from "@/lib/services/workroomCreation";
 import { IncidentRoom } from "@/lib/types/incidentRoom";
 
@@ -22,6 +24,7 @@ export default function IncidentRoomWallboardPage() {
     getSpecialistsByIncidentType("Insider Threat")
   );
   const [selectedParticipants, setSelectedParticipants] = useState<string[]>([]);
+  const [showConference, setShowConference] = useState(false);
 
   // Load incident room data if roomId is provided
   useEffect(() => {
@@ -89,15 +92,38 @@ export default function IncidentRoomWallboardPage() {
             </div>
           </div>
         </div>
-        <div className="text-right">
-          <div className="text-xl font-mono font-bold text-white">
-            {currentTime ? currentTime.toLocaleTimeString() : '--:--:--'}
-          </div>
-          <div className="text-xs text-slate-400">
-            {currentTime ? currentTime.toLocaleDateString() : 'Loading...'}
+        <div className="flex items-center gap-4">
+          {room && (
+            <Button
+              onClick={() => setShowConference(true)}
+              className="bg-purple-600 hover:bg-purple-700 text-white gap-2"
+            >
+              <Video className="h-4 w-4" />
+              Join Conference
+            </Button>
+          )}
+          <div className="text-right">
+            <div className="text-xl font-mono font-bold text-white">
+              {currentTime ? currentTime.toLocaleTimeString() : '--:--:--'}
+            </div>
+            <div className="text-xs text-slate-400">
+              {currentTime ? currentTime.toLocaleDateString() : 'Loading...'}
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Teams Conference View */}
+      {showConference && (
+        <TeamsConferenceView onClose={() => setShowConference(false)} />
+      )}
+
+      {/* Evidence Auto-Collection Section (only shown when roomId exists) */}
+      {room && (
+        <div className="mb-4">
+          <EvidenceAutoCollection />
+        </div>
+      )}
 
       {/* Split Screen - Two Completely Separate Floating Panels */}
       <div className="grid grid-cols-2 gap-4 h-[calc(100vh-120px)]">
